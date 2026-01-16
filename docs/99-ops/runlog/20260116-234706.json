@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-01-16T23:47:06.996378Z",
+  "intent": "verify.sh (read-only)",
+  "result": "pass",
+  "commands": [
+    {
+      "cmd": "./tools/verify.sh",
+      "exit_code": 0
+    }
+  ],
+  "notes": [
+    "docs/99-ops/review/verify_20260117-094706.log"
+  ]
+}

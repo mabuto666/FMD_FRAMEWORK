@@ -48,3 +48,13 @@
 ## Verification
 - Command: ./tools/verify.sh
 - Result: pass (see docs/99-ops/review/verify_20260117-093928.log)
+
+## Uplift v1 complete
+- Date: Sat Jan 17 09:47:18 AEST 2026
+- Branch: uplift/copilot-instructions
+- Summary: verify runner is read-only and notebook-safe; evidence conventions established.
+- Files changed: tools/verify.sh, docs/99-ops/status.md
+
+## Verification
+- Command: ./tools/verify.sh
+- Result: pass (see docs/99-ops/review/verify_20260117-094706.log)

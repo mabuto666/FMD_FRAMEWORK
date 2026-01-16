@@ -1,0 +1,11 @@
+== FMD_FRAMEWORK verify (minimal) ==
+pwd: /Users/matthiasnathanael/Documents/FMD_FRAMEWORK
+branch: uplift/copilot-instructions
+commit: e783b58
+
+python3 found: Python 3.14.2
+Running: python3 syntax check (repo, skip *.Notebook) ...
+Python syntax check complete; bad= 0
+PyYAML not installed; skipping YAML validation
+
+OK: minimal verify passed

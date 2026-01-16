@@ -8,6 +8,24 @@ mkdir -p "$LOG_DIR"
 ts="$(date +%Y%m%d-%H%M%S)"
 out_log="$LOG_DIR/verify_${ts}.log"
 
+write_runlog() {
+  local code="$1"
+  local result="pass"
+  if [ "$code" -ne 0 ]; then
+    result="fail"
+  fi
+  if command -v python3 >/dev/null 2>&1; then
+    python3 tools/runlog.py --intent "$INTENT" --result "$result" --cmd "./tools/verify.sh" --exit "$code" --note "$out_log" >/dev/null || true
+  fi
+}
+
+on_exit() {
+  local code="$?"
+  write_runlog "$code"
+}
+
+trap on_exit EXIT
+
 echo "== FMD_FRAMEWORK verify (minimal) ==" | tee "$out_log"
 echo "pwd: $(pwd)" | tee -a "$out_log"
 echo "branch: $(git rev-parse --abbrev-ref HEAD)" | tee -a "$out_log"
@@ -64,7 +82,7 @@ except Exception:
 
 bad = 0
 for root, _, files in os.walk("."):
-    if root.startswith("./.git") or root.startswith("./.venv"):
+    if root.startswith("./.git") or root.startswith("./.venv") or ".Notebook" in root:
         continue
     for fn in files:
         if fn.endswith((".yml",".yaml")):
@@ -82,10 +100,5 @@ fi
 
 echo | tee -a "$out_log"
 echo "OK: minimal verify passed" | tee -a "$out_log"
-
-# Write runlog JSON (best-effort)
-if command -v python3 >/dev/null 2>&1; then
-  python3 tools/runlog.py --intent "$INTENT" --result pass --cmd "./tools/verify.sh" --exit 0 --note "$out_log" >/dev/null || true
-fi
 
 echo "$out_log"
