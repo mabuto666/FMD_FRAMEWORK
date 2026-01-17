@@ -1,0 +1,54 @@
+{
+  "version": 0.1,
+  "project": "FMD_FRAMEWORK",
+  "operating_model": {
+    "mayor": "codex",
+    "plumber": "github_copilot_agent_vscode"
+  },
+  "lane_policy": {
+    "pr_lane": "read_only",
+    "apply_lane": "workflow_dispatch_only"
+  },
+  "guardrails": [
+    "no_ui_fixes",
+    "idempotent",
+    "no_deletes_unless_ALLOW_DESTRUCTIVE_true",
+    "discover_before_change"
+  ],
+  "evidence": {
+    "status_file": "docs/99-ops/status.md",
+    "runlog_dir": "docs/99-ops/runlog"
+  },
+  "definition_of_done": {
+    "checks": [
+      {
+        "name": "verify_runner_passes",
+        "cmd": "./tools/verify.sh",
+        "expect_exit": 0
+      }
+    ]
+  },
+  "work_orders": [
+    {
+      "id": "WO-01",
+      "title": "First autonomous task: repo inventory + known gotchas docs",
+      "ready": true,
+      "steps": [
+        "create docs/99-ops/repo_inventory.md (repo map + key entrypoints)",
+        "create docs/99-ops/known_gotchas.md (notebook quirks, verify rules, evidence rules)",
+        "update docs/99-ops/status.md with summary + how verified"
+      ],
+      "acceptance": [
+        {
+          "cmd": "test -f docs/99-ops/repo_inventory.md"
+        },
+        {
+          "cmd": "test -f docs/99-ops/known_gotchas.md"
+        },
+        {
+          "cmd": "./tools/verify.sh"
+        }
+      ]
+    }
+  ]
+}
